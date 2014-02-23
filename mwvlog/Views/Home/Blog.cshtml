@@ -1,0 +1,47 @@
+﻿@model IEnumerable<mwvlog.Models.MoviePost>
+@{
+    ViewBag.Title = "Blog";
+}
+
+<h2>VLog Posts</h2>
+@for (var i = 0; i < Model.Count(); i++) {
+        
+        var path = "/videos/"+(Model.ElementAt(i).Id)+".mp4";
+    
+    <div id="post_@i" class="row">
+        <div class="col-lg-6">
+            <video id="vlogpost_@i" class="video-js vjs-default-skin" controls preload="none" width="580" height="264"
+                   poster="/images/playbutton.png"
+                   data-setup="{}">
+                <source src="@path" type="video/mp4" />
+            </video>
+            <br />
+        </div>
+        <div class="col-lg-5">
+            <div class="bs-example">
+                <ul class="nav nav-pills" style="margin-bottom: 15px">
+                    <li class="active">
+                        <a href="#articlePost_@i" data-toggle="tab">Article</a>
+                    </li>
+                    <li>
+                        <a href="#comments_@i" data-toggle="tab">Comments (0)</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content" id="myTabContent_@i">
+                <div class="tab-pane fade active in" id="articlePost_@i">
+                        <h3>@Model.ElementAt(i).Title</h3>
+                        <p>@Model.ElementAt(i).Body</p>
+                </div>
+                <div class="tab-pane fade" id="comments_@i">
+                    No Comments.
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <br /><br />
+}
+
+<!---<source src="~/App_Data/videos/.webm" type='video/webm' />
+                <source src="~/App_Data/videos/.ogv" type='video/ogg' />--->

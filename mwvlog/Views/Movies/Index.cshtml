@@ -1,0 +1,36 @@
+﻿@model IEnumerable<mwvlog.Models.MoviePost>
+
+@{
+    ViewBag.Title = "Videos Archive";
+}
+
+
+<div class="row">
+
+    <div class="col-lg-6">
+        <h2>Videos Archive</h2>
+        @for (var i = 0; i < Model.Count(); i++)
+        {
+            var path = "/videos/" + (Model.ElementAt(i).Id) + ".mp4";
+            
+            <div id="post_@i">
+                <video id="vlogpost_@i" class="video-js vjs-default-skin" controls preload="none" width="580" height="264"
+                       poster="/images/playbutton.png"
+                       data-setup="{}">
+                    <source src="@path" type='video/mp4' />
+                </video>
+                <div class="well-sm">
+                    <h3>@Model.ElementAt(i).Title</h3>
+                </div>
+            </div>
+            <hr />
+            <br /><br />
+        }
+    </div>
+
+    <div class="col-lg-4">
+         @if(User.Identity.Name == "micaiahwallace") {
+            Html.RenderPartial("Upload", "Movies");
+        }
+    </div>
+</div>

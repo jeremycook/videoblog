@@ -1,0 +1,38 @@
+﻿
+@{
+    Layout = null;
+}
+
+<h2>Create Post</h2>
+
+    <div class="well">
+        <form method="post" action="@Url.Action("Upload","Movies")" class="bs-example form-horizontal" enctype="multipart/form-data">
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label" for="inputTitle">Title</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="inputTitle" name="title" type="text" placeholder="Article Title">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label" for="textArea">Post</label>
+                    <div class="col-lg-10">
+                        <textarea class="form-control" id="textArea" name="body" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label" for="file">Video (mp4)</label>
+                    <div class="col-lg-10">
+                        <input type="file" name="file" id="file" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </div>
+            </fieldset>
+
+        </form>
+    </div>
+<hr />
