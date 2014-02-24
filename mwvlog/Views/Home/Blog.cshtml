@@ -6,14 +6,19 @@
 <h2>VLog Posts</h2>
 @for (var i = 0; i < Model.Count(); i++) {
         
-        var path = "/videos/"+(Model.ElementAt(i).Id)+".mp4";
+        var postid = Model.ElementAt(i).Id;
+        var path1 = "/videos/" + postid + ".mp4";
+        var path2 = "/videos/" + postid + ".ogv";
+        var path3 = "/videos/" + postid + ".webm";
     
     <div id="post_@i" class="row">
         <div class="col-lg-6">
             <video id="vlogpost_@i" class="video-js vjs-default-skin" controls preload="none" width="580" height="264"
                    poster="/images/playbutton.png"
                    data-setup="{}">
-                <source src="@path" type="video/mp4" />
+                <source src="@path1" type="video/mp4" />
+                <source src="@path2" type="video/ogg" />
+                <source src="@path3" type="video/webm" />
             </video>
             <br />
         </div>
@@ -30,7 +35,7 @@
             </div>
             <div class="tab-content" id="myTabContent_@i">
                 <div class="tab-pane fade active in" id="articlePost_@i">
-                        <h3>@Model.ElementAt(i).Title</h3>
+                        <h3>@Model.ElementAt(i).Title @if(User.Identity.Name == "micaiahwallace") {<span style="color:darkred;cursor:pointer"><a onclick="if(confirm('Are you sure you want to delete this post?')) window.location='@Url.Action("Delete","Home")?postid=@postid'">(Delete Post)</a></span>}</h3>
                         <p>@Model.ElementAt(i).Body</p>
                 </div>
                 <div class="tab-pane fade" id="comments_@i">

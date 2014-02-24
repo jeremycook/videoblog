@@ -28,25 +28,28 @@ namespace mwvlog.Controllers
 
         [HttpPost]
         [Authorize(Users = "micaiahwallace")]
-        public ActionResult Upload(HttpPostedFileBase file) 
+        public ActionResult Upload(IEnumerable<HttpPostedFileBase> files) 
         {
-            if (file != null && file.ContentLength > 0)
+            var title = Request.Form["title"];
+            var body = Request.Form["body"];
+
+            MoviePost post = new MoviePost();
+            post.Title = title;
+            post.Body = body;
+
+            _db.MoviePosts.Add(post);
+            _db.SaveChanges();
+
+            foreach (var file in files)
             {
-                var title = Request.Form["title"];
-                var body = Request.Form["body"];
+                if (file != null && file.ContentLength > 0)
+                {
+                    var id = _db.Entry(post).Entity.Id;
 
-                MoviePost post = new MoviePost();
-                post.Title = title;
-                post.Body = body;
-
-                _db.MoviePosts.Add(post);
-                _db.SaveChanges();
-
-                var id = _db.Entry(post).Entity.Id;
-
-                var FileExtension = Path.GetExtension(file.FileName);
-                var path = Path.Combine(Server.MapPath("~/videos"), id+FileExtension);
-                file.SaveAs(path);
+                    var FileExtension = Path.GetExtension(file.FileName);
+                    var path = Path.Combine(Server.MapPath("~/videos"), id + FileExtension);
+                    file.SaveAs(path);
+                }
             }
 
             return RedirectToAction("Index");
